@@ -10,6 +10,7 @@ services:
       - "5000:5000"
     environment:
       - NODE_ENV=development
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/WeWardTradeDB
     command: npm run dev
     networks:
       - app-network
@@ -27,5 +28,20 @@ services:
     networks:
       - app-network
 
+  db:
+      image: postgres:16
+      restart: always
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: WeWardTradeDB
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      ports:
+        - "5432:5432"
+
 networks:
   app-network:
+
+volumes:
+  postgres_data:
