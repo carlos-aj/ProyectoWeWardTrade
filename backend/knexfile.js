@@ -3,16 +3,19 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
+
+require('dotenv').config();
+
 module.exports = {
 
   development: {
     client: 'pg',
     connection: {
-      database: 'WeWardTradeDB',
-      user:     'postgres',
-      password: 'postgres',
-      host:     'localhost',
-      port:     5433
+      database: process.env.POSTGRES_DB || 'WeWardTradeDB',
+      user:     process.env.POSTGRES_USER || 'postgres',
+      password: process.env.POSTGRES_PASSWORD || 'postgres',
+      host:     process.env.POSTGRES_HOST || 'localhost',
+      port:     process.env.POSTGRES_PORT || 5432
     },
     pool: {
       min: 2,
