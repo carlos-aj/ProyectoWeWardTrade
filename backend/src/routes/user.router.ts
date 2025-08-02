@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import { Router } from 'express';
 import * as UserController from '../controllers/user.controller';
 import { authenticateToken } from '../utils/auth';
 
