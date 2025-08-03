@@ -5,14 +5,13 @@ services:
     build: ./backend
     volumes:
       - ./backend:/app
+      - /app/node_modules
     ports:
       - "5000:5000"
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgres://postgres:postgres@db:5432/WeWardTradeDB
     command: npm run dev
-    networks:
-      - app-network
 
   frontend:
     build: ./frontend
@@ -24,8 +23,6 @@ services:
     environment:
       - NODE_ENV=development
     command: npm start
-    networks:
-      - app-network
 
   db:
     image: postgres:16
@@ -43,6 +40,5 @@ services:
 
 networks:
   app-network:
-
 volumes:
   postgres_data:

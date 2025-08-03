@@ -1,0 +1,43 @@
+/* Franja superior que contiene la imagen y el menú */
+.layoutHeader {
+  width: 100%;
+  height: 5rem;
+  background-color: #f06d28;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* Contenido principal */
+.layoutMain {
+  padding: 2rem;
+  box-sizing: border-box;
+  min-height: calc(100vh - 4rem);
+  background-color: #fff;
+  overflow-x: hidden;
+}
+
+/* Imagen alineada a la izquierda */
+.image-header {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Imagen MUCHO más pequeña */
+.image {
+  height: 5rem;        /* más pequeña que antes */
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+
+.image:hover {
+  transform: scale(1.10);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
