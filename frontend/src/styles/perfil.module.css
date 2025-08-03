@@ -1,0 +1,148 @@
+/* Página completa centrada sin scroll */
+.perfilPage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: #fff;
+  overflow: hidden;
+  padding-top: 4rem; /* por si necesitas espacio del layout */
+}
+
+/* Contenedor visual del perfil */
+.perfilContainer {
+  max-width: 600px;
+  width: 100%;
+  background: #e0e0e0;
+  padding: 2rem;
+  border-radius: 25px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.perfilContainer h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #f06d28;
+  margin-bottom: 1.5rem;
+}
+
+/* Info personal */
+.perfilInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.infoRow label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Campo gris con texto o input */
+.infoValue {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.infoText,
+.infoInput {
+  flex: 1;
+  font-size: 1rem;
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.infoInput {
+  padding: 0.3rem 0;
+}
+
+/* Icono de editar alineado al borde derecho */
+.editIcon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+  cursor: pointer;
+}
+
+.editIcon:hover {
+  color: #f06d28;
+}
+
+/* Error de validación */
+.errorMsg {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+  text-align: right;
+}
+
+/* Botón para eliminar cuenta */
+.deleteButton {
+  margin-top: 2rem;
+  padding: 0.8rem 1rem;
+  background-color: #d9534f;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #c9302c;
+}
+
+/* Responsive para móviles */
+@media (max-width: 600px) {
+  .perfilContainer {
+    padding: 1.5rem 1rem;
+    margin: 1rem;
+    box-shadow: none;
+  }
+
+  .infoValue {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .infoText,
+  .infoInput {
+    font-size: 1rem;
+  }
+
+  .editIcon {
+    right: 0.5rem;
+  }
+
+  .deleteButton {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+}
