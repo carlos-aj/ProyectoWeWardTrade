@@ -27,13 +27,15 @@ async function createUser(user) {
     if (!hashedPassword || hashedPassword === user.password) {
         throw new Error('La contraseña no fue cifrada correctamente');
     }
-    return await User_1.User.query().insert({
+    const result = await User_1.User.query().insert({
         ...user,
         password: hashedPassword,
         email_confirmed: false,
         email_confirmation_token: token,
         email_confirmation_sent_at: now
     });
+    console.log('Resultado de la inserción en la BD:', result);
+    return result;
 }
 async function confirmEmail(token) {
     const user = await User_1.User.query().findOne({ email_confirmation_token: token });

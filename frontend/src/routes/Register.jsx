@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { loginUser } from "../services/authService";
+import { registerUser } from "../services/authService";
 import "../styles/register.css";
 import ArrowBack from "../componentes/common/arrowBack";
 import "../styles/arrowBack.css"; 
@@ -14,17 +14,25 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
-  const [username, setUsername] = useState("");
+  const [name, setUsername] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
+    if (!email || !password || !name) {
+      alert("Por favor, completa todos los campos.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden.");
+      return;
+    }
     try {
-      const token = await loginUser(email, password);
-      login(token);
-      navigate("/home");
+      const response = await registerUser({ email, password, name });
+      alert((response && response.message) ? response.message : "Usuario creado. Revisa tu correo para confirmar la cuenta.");
+      navigate("/");
     } catch (err) {
-      alert(err.message);
+      alert(err && err.message ? err.message : "Error en el registro");
     }
   };
 
@@ -45,7 +53,7 @@ export default function Register() {
           <input
             type="text"
             placeholder="Username"
-            value={username}
+            value={name}
             onChange={(e) => setUsername(e.target.value)}
             className="input-field-register"
           />
@@ -105,7 +113,7 @@ export default function Register() {
           </div>
         )}
 
-        <button className="button-register" onClick={handleLogin}>
+        <button className="button-register" onClick={handleRegister}>
           Register
         </button>
           

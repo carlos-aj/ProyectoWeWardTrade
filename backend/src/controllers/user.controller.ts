@@ -26,15 +26,22 @@ export async function getAllUsers(req: Request, res: Response) {
 }
 
 export async function createUser(req: Request, res: Response) {
+    console.log('Petición recibida en /api/users')
     const userData = req.body;
     try {
+        console.log('Intentando crear usuario con datos:', userData);
         const newUser = await UserService.createUser(userData);
+        console.log('Usuario creado:', newUser);
 
         const confirmationLink = `http://localhost:5000/api/users/confirm/${newUser.email_confirmation_token}`;
-        await sendConfirmationEmail(newUser.email, confirmationLink);
-
+        try {
+            await sendConfirmationEmail(newUser.email, confirmationLink);
+        } catch (emailError) {
+            console.error('Error enviando correo de confirmación:', emailError);
+        }
         res.status(201).json({ message: 'Usuario creado. Revisa tu correo para confirmar la cuenta.' });
     } catch (error) {
+        console.error('Error creando usuario:', error);
         res.status(500).json({ message: 'Error creating user', error });
     }
 }
@@ -46,7 +53,7 @@ export async function confirmEmail(req: Request, res: Response) {
         if (!user) {
             return res.status(400).json({ message: 'Token inválido o expirado' });
         }
-        res.json({ message: 'Correo confirmado correctamente' });
+        return res.redirect('http://localhost:3000/');
     } catch (error) {
         res.status(500).json({ message: 'Error confirmando correo', error });
     }

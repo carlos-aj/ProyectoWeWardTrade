@@ -65,7 +65,7 @@ export default function Login() {
 
         <div className="forgot-password-link">
               <p>¿Olvidaste tu contraseña? 
-                <a href="/recover-password" onClick={() => navigate("/RecoverPassword")}>
+                <a href="/recover-password" onClick={e => {e.preventDefault(); navigate("/recover-password");}}>
                 Recuperar contraseña
                 </a>
               </p>
@@ -77,7 +77,7 @@ export default function Login() {
 
         <div className="register-link">
           <p>¿No tienes una cuenta? 
-              <a href="/register" onClick={() => navigate("/Register")}>
+              <a href="/register" onClick={e => {e.preventDefault(); navigate("/register");}}> 
                   Regístrate
               </a>
           </p>

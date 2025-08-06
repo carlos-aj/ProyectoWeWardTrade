@@ -22,13 +22,15 @@ export async function createUser(user: IUser){
         throw new Error('La contraseña no fue cifrada correctamente');
     }
 
-    return await User.query().insert({
+    const result = await User.query().insert({
         ...user,
         password: hashedPassword,
         email_confirmed: false,
         email_confirmation_token: token,
         email_confirmation_sent_at: now
     });
+    console.log('Resultado de la inserción en la BD:', result);
+    return result;
 }
 
 export async function confirmEmail(token: string) {
