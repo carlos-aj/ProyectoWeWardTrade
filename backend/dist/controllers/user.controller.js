@@ -40,6 +40,8 @@ exports.confirmEmail = confirmEmail;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
 exports.login = login;
+exports.requestPasswordReset = requestPasswordReset;
+exports.resetPassword = resetPassword;
 const UserService = __importStar(require("../services/user.service"));
 const emailSender_1 = require("../utils/emailSender");
 async function getUser(req, res) {
@@ -92,7 +94,7 @@ async function confirmEmail(req, res) {
         if (!user) {
             return res.status(400).json({ message: 'Token inválido o expirado' });
         }
-        return res.redirect('/');
+        return res.redirect('http://localhost:3000/');
     }
     catch (error) {
         res.status(500).json({ message: 'Error confirmando correo', error });
@@ -133,5 +135,25 @@ async function login(req, res) {
     }
     catch (error) {
         res.status(401).json({ message: error.message || 'Credenciales inválidas' });
+    }
+}
+async function requestPasswordReset(req, res) {
+    const { email } = req.body;
+    try {
+        await UserService.requestPasswordReset(email);
+        res.json({ message: 'Correo de recuperación enviado' });
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message || 'Error al solicitar recuperación' });
+    }
+}
+async function resetPassword(req, res) {
+    const { token, newPassword } = req.body;
+    try {
+        await UserService.resetPassword(token, newPassword);
+        res.json({ message: 'Contraseña restablecida correctamente' });
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message || 'Error al restablecer contraseña' });
     }
 }

@@ -24,3 +24,18 @@ export async function sendConfirmationEmail(to: string, confirmationLink: string
 
   await transporter.sendMail(mailOptions);
 }
+
+export async function sendPasswordResetEmail(to: string, resetLink: string) {
+  const mailOptions = {
+    from: '"WeWard Trade" <tu-email@dominio.com>',
+    to,
+    subject: 'Recupera tu contraseña',
+    html: `
+      <h2>Recuperación de contraseña</h2>
+      <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+      <a href="${resetLink}">Restablecer contraseña</a>
+      <p>Si no solicitaste este cambio, ignora este correo.</p>
+    `
+  };
+  await transporter.sendMail(mailOptions);
+}

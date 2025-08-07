@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import RecoverPassword from "./routes/RecoverPassword";
+import ResetPassword from "./routes/ResetPassword";
 import Groups from "./routes/Groups";
 import Perfil from "./routes/Perfil";
 import Cards from "./routes/Cards";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/recover-password" element={<RecoverPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         <Route
           path="/groups"

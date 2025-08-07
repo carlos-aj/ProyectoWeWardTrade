@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 import { IUser, User } from "../models/User";
 import { generateToken } from '../utils/auth';
 
+import { sendPasswordResetEmail } from '../utils/emailSender';
+
 export async function getUser(id: number) {
     return await User.query().findById(id);
 }
@@ -65,4 +67,34 @@ export async function loginUser(email: string, password: string) {
     }
     const token = generateToken({ id: user.id, email: user.email, name: user.name });
     return { token, user: { id: user.id, email: user.email, name: user.name } };
+}
+
+export async function requestPasswordReset(email: string) {
+    const user = await User.query().findOne({ email });
+    if (!user || !user.id) {
+        throw new Error('No existe usuario con ese email');
+    }
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const now = new Date();
+    await User.query().patchAndFetchById(user.id, {
+        password_reset_token: resetToken,
+        password_reset_sent_at: now
+    });
+    const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
+    await sendPasswordResetEmail(user.email, resetLink);
+    return true;
+}
+
+export async function resetPassword(token: string, newPassword: string) {
+    const user = await User.query().findOne({ password_reset_token: token });
+    if (!user || !user.id) {
+        throw new Error('Token inválido o expirado');
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await User.query().patchAndFetchById(user.id, {
+        password: hashedPassword,
+        password_reset_token: undefined,
+        password_reset_sent_at: undefined
+    });
+    return true;
 }

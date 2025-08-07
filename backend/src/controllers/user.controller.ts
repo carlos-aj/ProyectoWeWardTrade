@@ -95,3 +95,23 @@ export async function login(req: Request, res: Response) {
         res.status(401).json({ message: error.message || 'Credenciales inválidas' });
     }
 }
+
+export async function requestPasswordReset(req: Request, res: Response) {
+    const { email } = req.body;
+    try {
+        await UserService.requestPasswordReset(email);
+        res.json({ message: 'Correo de recuperación enviado' });
+    } catch (error: any) {
+        res.status(400).json({ message: error.message || 'Error al solicitar recuperación' });
+    }
+}
+
+export async function resetPassword(req: Request, res: Response) {
+    const { token, newPassword } = req.body;
+    try {
+        await UserService.resetPassword(token, newPassword);
+        res.json({ message: 'Contraseña restablecida correctamente' });
+    } catch (error: any) {
+        res.status(400).json({ message: error.message || 'Error al restablecer contraseña' });
+    }
+}

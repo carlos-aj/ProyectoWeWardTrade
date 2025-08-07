@@ -15,4 +15,8 @@ router.post('/', UserController.createUser);
 router.get('/confirm/:token', UserController.confirmEmail);
 router.post('/login', UserController.login);
 
+// Recuperación de contraseña
+router.post('/request-password-reset', UserController.requestPasswordReset);
+router.post('/reset-password', UserController.resetPassword);
+
 export default router;

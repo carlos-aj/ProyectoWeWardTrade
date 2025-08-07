@@ -10,6 +10,8 @@ export interface IUser {
   email_confirmation_sent_at?: Date;
   created_at?: Date;
   updated_at?: Date;
+  password_reset_token?: string;
+  password_reset_sent_at?: Date;
 }
 
 export class User extends Model implements IUser {
@@ -22,6 +24,8 @@ export class User extends Model implements IUser {
   email_confirmation_sent_at?: Date;
   created_at?: Date;
   updated_at?: Date;
+  password_reset_token?: string;
+  password_reset_sent_at?: Date;
 
   static tableName = 'users';
 }
